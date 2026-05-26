@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct CharacterView: View {
+struct RelicSetView: View {
     // State variables for data fetching
-    @State private var characters: [StarRailCharacter] = []
+    @State private var relic_sets: [RelicSet] = []
     @State private var isLoading = true
     
     // 1. Define the Grid Layout (Two flexible columns)
@@ -28,9 +28,9 @@ struct CharacterView: View {
             } else {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(characters) { character in
-                            NavigationLink(destination: CharacterDetailView(character: character)) {
-                                CharacterCardView(character: character)
+                        ForEach(relic_sets) { relic_set in
+                            NavigationLink(destination: RelicSetDetailView(relic_set: relic_set)) {
+                                RelicSetCardView(relic_set: relic_set)
                             }
                             .buttonStyle(.plain)
                         }
@@ -39,14 +39,14 @@ struct CharacterView: View {
                 }
             }
         }
-        .navigationTitle("Characters")
+        .navigationTitle("Relic Sets")
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
         .task {
             do {
                 let service = StarRailService()
-                self.characters = try await service.fetchCharacter()
+                self.relic_sets = try await service.fetchRelicSet()
                 self.isLoading = false
             } catch {
                 print("Failed to load data: \(error)")
@@ -57,5 +57,5 @@ struct CharacterView: View {
 }
 
 #Preview {
-    CharacterView()
+    RelicSetView()
 }

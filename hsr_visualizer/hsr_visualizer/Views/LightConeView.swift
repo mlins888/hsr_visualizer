@@ -8,42 +8,50 @@
 import SwiftUI
 
 struct LightConeView: View {
+    @State private var light_cones: [LightCone] = []
+    @State private var isLoading = true
+    
+    // 1. Define the Grid Layout (Two flexible columns)
+    let columns = [
+        GridItem(.flexible(), spacing: 20),
+        GridItem(.flexible(), spacing: 30)
+    ]
+    
     var body: some View {
         ZStack {
+            AppBackground()
             
+            if isLoading {
+                ProgressView("Accessing Data Bank...")
+                    .foregroundStyle(Color(red: 0.85, green: 0.75, blue: 0.55))
+            } else {
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 16) {
+                        ForEach(light_cones) { light_cone in
+                            NavigationLink(destination: LightConeDetailView(light_cone: light_cone)) {
+                                LightConeCardView(light_cone: light_cone)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .padding(16)
+                }
+            }
         }
-        
-        // BACKGROUND COLORS
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-            EllipticalGradient(
-                stops: [
-                    Gradient.Stop(color: Color(red: 0.22, green: 0.07, blue: 0.41), location: 0.00),
-                    Gradient.Stop(color: .black.opacity(0), location: 1.00),
-                ],
-                center: UnitPoint(x: 0, y: 0.22)
-            )
-        )
-        .background(
-            EllipticalGradient(
-                stops: [
-                    Gradient.Stop(color: Color(red: 0.22, green: 0.07, blue: 0.41), location: 0.00),
-                    Gradient.Stop(color: .black.opacity(0), location: 1.00),
-                ],
-                center: UnitPoint(x: 1.3, y: 0.8)
-            )
-        )
-        .background(
-            LinearGradient(
-                stops: [
-                    Gradient.Stop(color: Color(red: 0.1, green: 0.13, blue: 0.21), location: 0.00),
-                    Gradient.Stop(color: Color(red: 0.11, green: 0.21, blue: 0.42), location: 1.00),
-                ],
-                startPoint: UnitPoint(x: 0.16, y: -0.01),
-                endPoint: UnitPoint(x: 0.65, y: 1)
-            )
-        )
-        .ignoresSafeArea()
+        .navigationTitle("Light Cones")
+        #if os(iOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
+        .task {
+            do {
+                let service = StarRailService()
+                self.light_cones = try await service.fetchLightCone()
+                self.isLoading = false
+            } catch {
+                print("Failed to load data: \(error)")
+                self.isLoading = false
+            }
+        }
     }
 }
 

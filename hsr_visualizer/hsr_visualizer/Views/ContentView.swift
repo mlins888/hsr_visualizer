@@ -12,7 +12,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                
+                AppBackground()
                 // BACKGROUND CIRCLES
                 DecorativeCircle()
                     .offset(x: 16, y: -120)
@@ -52,7 +52,7 @@ struct ContentView: View {
                     Text("Data Bank")
                         .font(Font.custom("MuseoModerno-Light", size: 35))
                         .foregroundColor(Color(red: 0.97, green: 0.93, blue: 0.7))
-                    
+                    Spacer()
                     //MENU BUTTON TEXT
                     NavigationLink(destination: CharacterView()) {
                         Text("Characters")
@@ -86,24 +86,8 @@ struct ContentView: View {
                             .shadow(color: .black.opacity(0.5), radius: 5, x: 0, y: 5)
                     }
                     .buttonStyle(.plain)
-                    NavigationLink(destination: RelicView()) {
+                    NavigationLink(destination: RelicSetView()) {
                         Text("Relics")
-                            .font(Font.custom("NixieOne-Regular", size: 24))
-                            .foregroundColor(Color(red: 0.85, green: 0.75, blue: 0.55))
-                            .frame(width: 277, height: 60)
-                            .background(.ultraThinMaterial)
-                            .environment(\.colorScheme, .dark)
-                            .cornerRadius(26)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 26)
-                                    .inset(by: 0.5)
-                                    .stroke(Color(red: 0.75, green: 0.59, blue: 0.3), lineWidth: 1)
-                            )
-                            .shadow(color: .black.opacity(0.5), radius: 5, x: 0, y: 5)
-                    }
-                    .buttonStyle(.plain)
-                    NavigationLink(destination: SimUniverseView()) {
-                        Text("Sim Universe")
                             .font(Font.custom("NixieOne-Regular", size: 24))
                             .foregroundColor(Color(red: 0.85, green: 0.75, blue: 0.55))
                             .frame(width: 277, height: 60)
@@ -122,38 +106,6 @@ struct ContentView: View {
                     Spacer()
                 }
             }
-            
-            // BACKGROUND COLORS
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(
-                EllipticalGradient(
-                    stops: [
-                        Gradient.Stop(color: Color(red: 0.22, green: 0.07, blue: 0.41), location: 0.00),
-                        Gradient.Stop(color: .black.opacity(0), location: 1.00),
-                    ],
-                    center: UnitPoint(x: 0, y: 0.22)
-                )
-            )
-            .background(
-                EllipticalGradient(
-                    stops: [
-                        Gradient.Stop(color: Color(red: 0.22, green: 0.07, blue: 0.41), location: 0.00),
-                        Gradient.Stop(color: .black.opacity(0), location: 1.00),
-                    ],
-                    center: UnitPoint(x: 1.3, y: 0.8)
-                )
-            )
-            .background(
-                LinearGradient(
-                    stops: [
-                        Gradient.Stop(color: Color(red: 0.1, green: 0.13, blue: 0.21), location: 0.00),
-                        Gradient.Stop(color: Color(red: 0.11, green: 0.21, blue: 0.42), location: 1.00),
-                    ],
-                    startPoint: UnitPoint(x: 0.16, y: -0.01),
-                    endPoint: UnitPoint(x: 0.65, y: 1)
-                )
-            )
-            .ignoresSafeArea()
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  RelicView.swift
+//  AppBackground.swift
 //  game_visualizer_individual
 //
 //  Created by Makenna Linsky on 5/22/26.
@@ -7,12 +7,11 @@
 
 import SwiftUI
 
-struct RelicView: View {
+struct AppBackground: View {
     var body: some View {
         ZStack {
             
         }
-        
         // BACKGROUND COLORS
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
@@ -48,6 +47,5 @@ struct RelicView: View {
 }
 
 #Preview {
-    RelicView()
+    AppBackground()
 }
-
