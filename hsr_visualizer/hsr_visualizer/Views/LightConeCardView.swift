@@ -13,7 +13,7 @@ struct LightConeCardView: View {
     var body: some View {
         VStack(spacing: 12) {
             // THE NEW ASYNC IMAGE IMPLEMENTATION
-                AsyncImage(url: light_cone.previewURL) { phase in
+                AsyncImage(url: light_cone.portraitURL) { phase in
                     switch phase {
                         
                         // LOADING STATE
@@ -54,7 +54,7 @@ struct LightConeCardView: View {
             // 2. Character Details
             VStack(spacing: 4) {
                 Text(light_cone.name)
-                    .font(.headline)
+                    .font(Font.custom("MuseoModerno-Light", size: 16))
                     .foregroundStyle(.white)
                     .lineLimit(1) // Prevents long names from breaking the grid
                 

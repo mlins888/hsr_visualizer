@@ -50,8 +50,8 @@ struct CharacterDetailView: View {
                         StatRow(title: "Element", value: character.element)
                         Divider().background(Color.white.opacity(0.2))
                         StatRow(title: "Path", value: character.displayPath)
-                        Divider().background(Color.white.opacity(0.2))
-                        StatRow(title: "Max SP", value: String(character.max_sp))
+                        //Divider().background(Color.white.opacity(0.2))
+                        //StatRow(title: "Max SP", value: String(character.max_sp))
                     }
                     .padding(24)
                     .background(.ultraThinMaterial)

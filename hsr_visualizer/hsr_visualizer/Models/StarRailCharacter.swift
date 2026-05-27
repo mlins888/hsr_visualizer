@@ -17,7 +17,10 @@ struct StarRailCharacter: Codable, Identifiable, Hashable {
             return path.translatedPath
         }
     let element: String
-    let max_sp: Int
+    var displayElement: String {
+        return element.translatedElement
+    }
+    let max_sp: Int?
     
     let ranks: [String]
     let skills: [String]

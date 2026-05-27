@@ -9,6 +9,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    init() {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithTransparentBackground() // Keeps your space background visible
+            
+            // 2. Define your custom Gold color and Font using UIKit equivalents (UIColor / UIFont)
+            let goldColor = UIColor(red: 0.85, green: 0.75, blue: 0.55, alpha: 1.0)
+            // If you registered Spirax or DIN, use it here! Fallback is system font.
+            let customFont = UIFont(name: "NixieOne-Regular", size: 34) ?? .systemFont(ofSize: 34, weight: .bold)
+            let smallCustomFont = UIFont(name: "MuseoModerno-Light", size: 20) ?? .systemFont(ofSize: 20, weight: .semibold)
+            
+            // 3. Apply the styles to both the Large title (when scrolled up) and Inline title (when scrolled down)
+            appearance.largeTitleTextAttributes = [
+                .foregroundColor: goldColor,
+                .font: customFont
+            ]
+            
+            appearance.titleTextAttributes = [
+                .foregroundColor: goldColor,
+                .font: smallCustomFont
+            ]
+            
+            // 4. Force the navigation bar to use these rules
+            UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        }
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -52,7 +79,6 @@ struct ContentView: View {
                     Text("Data Bank")
                         .font(Font.custom("MuseoModerno-Light", size: 35))
                         .foregroundColor(Color(red: 0.97, green: 0.93, blue: 0.7))
-                    Spacer()
                     //MENU BUTTON TEXT
                     NavigationLink(destination: CharacterView()) {
                         Text("Characters")
@@ -88,6 +114,22 @@ struct ContentView: View {
                     .buttonStyle(.plain)
                     NavigationLink(destination: RelicSetView()) {
                         Text("Relics")
+                            .font(Font.custom("NixieOne-Regular", size: 24))
+                            .foregroundColor(Color(red: 0.85, green: 0.75, blue: 0.55))
+                            .frame(width: 277, height: 60)
+                            .background(.ultraThinMaterial)
+                            .environment(\.colorScheme, .dark)
+                            .cornerRadius(26)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 26)
+                                    .inset(by: 0.5)
+                                    .stroke(Color(red: 0.75, green: 0.59, blue: 0.3), lineWidth: 1)
+                            )
+                            .shadow(color: .black.opacity(0.5), radius: 5, x: 0, y: 5)
+                    }
+                    .buttonStyle(.plain)
+                    NavigationLink(destination: AnalyticsView()) {
+                        Text("Analytics")
                             .font(Font.custom("NixieOne-Regular", size: 24))
                             .foregroundColor(Color(red: 0.85, green: 0.75, blue: 0.55))
                             .frame(width: 277, height: 60)

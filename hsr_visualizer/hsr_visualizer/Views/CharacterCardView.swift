@@ -54,12 +54,12 @@ struct CharacterCardView: View {
             // 2. Character Details
             VStack(spacing: 4) {
                 Text(character.name)
-                    .font(.headline)
+                    .font(Font.custom("MuseoModerno-Light", size: 16))
                     .foregroundStyle(.white)
                     .lineLimit(1) // Prevents long names from breaking the grid
                 
                 Text(character.element)
-                    .font(.caption)
+                    .font(Font.custom("MuseoModerno-Light", size: 16))
                     .foregroundStyle(.gray)
             }
         }

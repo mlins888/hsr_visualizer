@@ -18,7 +18,17 @@ extension String {
         case "Warrior": return "Destruction"
         case "Shaman": return "Harmony"
         case "Priest": return "Abundance"
-        default: return self 
+        case "Memory": return "Remembrance"
+        case "Muse": return "Elation"
+        default: return self
+        }
+    }
+
+    var translatedElement: String {
+        switch self {
+        case "Thunder": return "Lightning"
+        case "Memory": return "Remembrance"
+        default: return self
         }
     }
 }
