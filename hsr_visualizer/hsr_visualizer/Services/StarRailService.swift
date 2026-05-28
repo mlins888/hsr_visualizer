@@ -8,68 +8,91 @@
 import Foundation
 
 class StarRailService {
-    
+
+    // In-memory caches: hold for the lifetime of the app session so navigating
+    // back and forth between views doesn't refetch the same JSON.
+    private static var charactersCache: [StarRailCharacter]?
+    private static var lightConesCache: [LightCone]?
+    private static var relicSetsCache: [RelicSet]?
+    private static var promotionsCache: [CharacterPromotion]?
+    private static var ranksCache: [CharacterRank]?
+    private static var skillTreesCache: [CharacterSkillTree]?
+    private static var skillsCache: [CharacterSkill]?
+
+    private func fetchJSON<T: Decodable>(from urlString: String) async throws -> [String: T] {
+        guard let url = URL(string: urlString) else { throw URLError(.badURL) }
+        let (data, _) = try await URLSession.shared.data(from: url)
+        return try JSONDecoder().decode([String: T].self, from: data)
+    }
+
     func fetchCharacter() async throws -> [StarRailCharacter] {
-        guard let url = URL(string: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/characters.json") else { throw URLError(.badURL) }
-        
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let decodedDictionary = try JSONDecoder().decode([String: StarRailCharacter].self, from: data)
-        
-        return Array(decodedDictionary.values).sorted { $0.name < $1.name }
+        if let cached = Self.charactersCache { return cached }
+        let decoded: [String: StarRailCharacter] = try await fetchJSON(
+            from: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/characters.json"
+        )
+        let result = Array(decoded.values).sorted { $0.name < $1.name }
+        Self.charactersCache = result
+        return result
     }
-    
+
     func fetchLightCone() async throws -> [LightCone] {
-        guard let url = URL(string: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/light_cones.json") else { throw URLError(.badURL) }
-        
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let decodedDictionary = try JSONDecoder().decode([String: LightCone].self, from: data)
-
-        return Array(decodedDictionary.values).sorted { $0.name < $1.name }
+        if let cached = Self.lightConesCache { return cached }
+        let decoded: [String: LightCone] = try await fetchJSON(
+            from: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/light_cones.json"
+        )
+        let result = Array(decoded.values).sorted { $0.name < $1.name }
+        Self.lightConesCache = result
+        return result
     }
-    
+
     func fetchRelicSet() async throws -> [RelicSet] {
-        guard let url = URL(string: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/relic_sets.json") else { throw URLError(.badURL) }
-        
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let decodedDictionary = try JSONDecoder().decode([String: RelicSet].self, from: data)
-
-        return Array(decodedDictionary.values).sorted { $0.name < $1.name }
+        if let cached = Self.relicSetsCache { return cached }
+        let decoded: [String: RelicSet] = try await fetchJSON(
+            from: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/relic_sets.json"
+        )
+        let result = Array(decoded.values).sorted { $0.name < $1.name }
+        Self.relicSetsCache = result
+        return result
     }
-    
+
     func fetchCharacterPromotion() async throws -> [CharacterPromotion] {
-        guard let url = URL(string: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/character_promotions.json") else { throw URLError(.badURL) }
-        
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let decodedDictionary = try JSONDecoder().decode([String: CharacterPromotion].self, from: data)
-
-        return Array(decodedDictionary.values).sorted { $0.id < $1.id }
+        if let cached = Self.promotionsCache { return cached }
+        let decoded: [String: CharacterPromotion] = try await fetchJSON(
+            from: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/character_promotions.json"
+        )
+        let result = Array(decoded.values).sorted { $0.id < $1.id }
+        Self.promotionsCache = result
+        return result
     }
-    
+
     func fetchCharacterRank() async throws -> [CharacterRank] {
-        guard let url = URL(string: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/character_ranks.json") else { throw URLError(.badURL) }
-        
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let decodedDictionary = try JSONDecoder().decode([String: CharacterRank].self, from: data)
-
-        return Array(decodedDictionary.values).sorted { $0.id < $1.id }
+        if let cached = Self.ranksCache { return cached }
+        let decoded: [String: CharacterRank] = try await fetchJSON(
+            from: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/character_ranks.json"
+        )
+        let result = Array(decoded.values).sorted { $0.id < $1.id }
+        Self.ranksCache = result
+        return result
     }
-    
+
     func fetchCharacterSkillTree() async throws -> [CharacterSkillTree] {
-        guard let url = URL(string: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/character_skill_trees.json") else { throw URLError(.badURL) }
-        
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let decodedDictionary = try JSONDecoder().decode([String: CharacterSkillTree].self, from: data)
-
-        return Array(decodedDictionary.values).sorted { $0.id < $1.id }
+        if let cached = Self.skillTreesCache { return cached }
+        let decoded: [String: CharacterSkillTree] = try await fetchJSON(
+            from: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/character_skill_trees.json"
+        )
+        let result = Array(decoded.values).sorted { $0.id < $1.id }
+        Self.skillTreesCache = result
+        return result
     }
-    
-    func fetchCharacterSkill() async throws -> [CharacterSkill] {
-        guard let url = URL(string: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/character_skills.json") else { throw URLError(.badURL) }
-        
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let decodedDictionary = try JSONDecoder().decode([String: CharacterSkill].self, from: data)
 
-        return Array(decodedDictionary.values).sorted { $0.id < $1.id }
+    func fetchCharacterSkill() async throws -> [CharacterSkill] {
+        if let cached = Self.skillsCache { return cached }
+        let decoded: [String: CharacterSkill] = try await fetchJSON(
+            from: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/character_skills.json"
+        )
+        let result = Array(decoded.values).sorted { $0.id < $1.id }
+        Self.skillsCache = result
+        return result
     }
 
 }

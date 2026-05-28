@@ -28,14 +28,14 @@ struct StarRailCharacter: Codable, Identifiable, Hashable {
     
     let icon: String
     var iconURL: URL? {
-            URL(string: "https://mlins888.github.io/StarRailUpdatedAPI/assets/icon/character/\(id).png")
+            URL(string: "https://cdn.jsdelivr.net/gh/Mar-7th/StarRailRes@master/icon/character/\(id).png")
         }
     let preview: String
     var previewURL: URL? {
-            URL(string: "https://mlins888.github.io/StarRailUpdatedAPI/assets/image/character_preview/\(id).png")
+            URL(string: "https://cdn.jsdelivr.net/gh/Mar-7th/StarRailRes@master/image/character_preview/\(id).png")
         }
     let portrait: String
     var portraitURL: URL? {
-            URL(string: "https://mlins888.github.io/StarRailUpdatedAPI/assets/image/character_portrait/\(id).png")
+            URL(string: "https://cdn.jsdelivr.net/gh/Mar-7th/StarRailRes@master/image/character_portrait/\(id).png")
         }
 }

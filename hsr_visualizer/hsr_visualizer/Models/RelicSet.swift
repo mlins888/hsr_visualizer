@@ -19,6 +19,6 @@ struct RelicSet: Codable, Identifiable, Hashable {
     let properties: [[Property]]
     let icon: String
     var iconURL: URL? {
-            URL(string: "https://mlins888.github.io/StarRailUpdatedAPI/assets/icon/relic/\(id).png")
+            URL(string: "https://cdn.jsdelivr.net/gh/Mar-7th/StarRailRes@master/icon/relic/\(id).png")
         }
 }

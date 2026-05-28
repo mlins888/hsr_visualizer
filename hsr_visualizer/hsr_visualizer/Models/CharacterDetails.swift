@@ -104,7 +104,7 @@ struct CharacterSkill: Codable, Identifiable {
     let simpleDesc: String
     let desc: String
     let params: [[Double]]
-    let icon: String
+    let icon: String?
     
     enum CodingKeys: String, CodingKey {
         case id, name, element, type, effect, desc, params, icon
