@@ -15,6 +15,8 @@ struct LightConeView: View {
     @State private var selectedPath: EnumPath? = nil
     @State private var sortOption: LightConeSortOption = .alphabetical
     
+    @State private var searchText = ""
+    
     // 1. Define the Grid Layout (Two flexible columns)
     let columns = [
         GridItem(.flexible(), spacing: 20),
@@ -26,6 +28,11 @@ struct LightConeView: View {
 
         if let path = selectedPath {
             result = result.filter { $0.displayPath == path.rawValue }
+        }
+        
+        if !searchText.isEmpty {
+            result = result.filter { $0.name.localizedCaseInsensitiveContains(searchText)
+            }
         }
 
         switch sortOption {
@@ -65,6 +72,7 @@ struct LightConeView: View {
                         }
                         .padding(16)
                     }
+                    .searchable(text: $searchText, prompt: "Search light cones...")
                 }
             }
         }

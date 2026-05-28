@@ -16,6 +16,8 @@ struct CharacterView: View {
     @State private var selectedElement: CharacterElement? = nil
     @State private var selectedPath: EnumPath? = nil
     @State private var sortOption: SortOption = .alphabetical
+    
+    @State private var searchText = ""
 
     // 1. Define the Grid Layout (Two flexible columns)
     let columns = [
@@ -31,6 +33,11 @@ struct CharacterView: View {
         }
         if let path = selectedPath {
             result = result.filter { $0.displayPath == path.rawValue }
+        }
+        
+        if !searchText.isEmpty {
+            result = result.filter { $0.name.localizedCaseInsensitiveContains(searchText)
+            }
         }
 
         switch sortOption {
@@ -72,6 +79,7 @@ struct CharacterView: View {
                         }
                         .padding(16)
                     }
+                    .searchable(text: $searchText, prompt: "Search characters...")
                 }
             }
         }
