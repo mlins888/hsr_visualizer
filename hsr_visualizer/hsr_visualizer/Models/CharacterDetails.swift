@@ -7,18 +7,6 @@
 
 import Foundation
 
-// Used every time the API lists an item requirement
-struct MaterialCost: Codable, Identifiable {
-    let id: String
-    let num: Int
-}
-
-// Used to define stat growth rates
-struct StatValue: Codable {
-    let base: Double
-    let step: Double
-}
-
 // base stats and ascension costs
 struct CharacterPromotion: Codable, Identifiable {
     let id: String

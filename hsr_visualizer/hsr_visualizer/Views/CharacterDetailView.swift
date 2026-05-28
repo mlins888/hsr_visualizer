@@ -16,8 +16,6 @@ struct CharacterDetailView: View {
     @State private var isLoading = true
     @State private var selectedSkillID: String?
 
-    private let gold = Color(red: 0.75, green: 0.59, blue: 0.3)
-    private let goldText = Color(red: 0.85, green: 0.75, blue: 0.55)
     private let cdnBase = "https://cdn.jsdelivr.net/gh/Mar-7th/StarRailRes@master/"
 
     private var selectedSkill: CharacterSkill? {
@@ -115,15 +113,6 @@ struct CharacterDetailView: View {
         }
     }
 
-    private func tagPill(_ text: String) -> some View {
-        Text(text)
-            .font(.subheadline)
-            .foregroundStyle(goldText)
-            .padding(.horizontal, 14)
-            .padding(.vertical, 6)
-            .background(Capsule().fill(Color.white.opacity(0.08)))
-            .overlay(Capsule().stroke(gold.opacity(0.5), lineWidth: 1))
-    }
 
     // MARK: - Stats
 
@@ -289,22 +278,7 @@ struct CharacterDetailView: View {
         }
     }
 
-    // MARK: - Layout helpers
-
-    private func sectionCard<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-        content()
-            .padding(20)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(.ultraThinMaterial)
-            .environment(\.colorScheme, .dark)
-            .cornerRadius(24)
-            .overlay(
-                RoundedRectangle(cornerRadius: 24)
-                    .stroke(Color.white.opacity(0.1), lineWidth: 1)
-            )
-            .padding(.horizontal, 20)
-    }
-
+    
     // MARK: - Data
 
     private func maxStat(_ stat: StatValue) -> Int {

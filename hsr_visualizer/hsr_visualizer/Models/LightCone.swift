@@ -18,14 +18,14 @@ struct LightCone: Codable, Identifiable, Hashable {
     let desc: String
     let icon: String
     var iconURL: URL? {
-            URL(string: "https://mlins888.github.io/StarRailUpdatedAPI/assets/icon/light_cone/\(id).png")
+            URL(string: "https://cdn.jsdelivr.net/gh/Mar-7th/StarRailRes@master/icon/light_cone/\(id).png")
         }
     let preview: String
     var previewURL: URL? {
-            URL(string: "https://mlins888.github.io/StarRailUpdatedAPI/assets/image/light_cone_preview/\(id).png")
+            URL(string: "https://cdn.jsdelivr.net/gh/Mar-7th/StarRailRes@master/image/light_cone_preview/\(id).png")
         }
     let portrait: String
     var portraitURL: URL? {
-            URL(string: "https://mlins888.github.io/StarRailUpdatedAPI/assets/image/light_cone_portrait/\(id).png")
+            URL(string: "https://cdn.jsdelivr.net/gh/Mar-7th/StarRailRes@master/image/light_cone_portrait/\(id).png")
         }
 }

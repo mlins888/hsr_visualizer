@@ -18,6 +18,8 @@ class StarRailService {
     private static var ranksCache: [CharacterRank]?
     private static var skillTreesCache: [CharacterSkillTree]?
     private static var skillsCache: [CharacterSkill]?
+    private static var conePromotionsCache: [LightConePromotion]?
+    private static var coneRanksCache: [LightConeRank]?
 
     private func fetchJSON<T: Decodable>(from urlString: String) async throws -> [String: T] {
         guard let url = URL(string: urlString) else { throw URLError(.badURL) }
@@ -92,6 +94,26 @@ class StarRailService {
         )
         let result = Array(decoded.values).sorted { $0.id < $1.id }
         Self.skillsCache = result
+        return result
+    }
+    
+    func fetchLightConePromotion() async throws -> [LightConePromotion] {
+        if let cached = Self.conePromotionsCache { return cached }
+        let decoded: [String: LightConePromotion] = try await fetchJSON(
+            from: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/light_cone_promotions.json"
+        )
+        let result = Array(decoded.values).sorted { $0.id < $1.id }
+        Self.conePromotionsCache = result
+        return result
+    }
+
+    func fetchLightConeRank() async throws -> [LightConeRank] {
+        if let cached = Self.coneRanksCache { return cached }
+        let decoded: [String: LightConeRank] = try await fetchJSON(
+            from: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/light_cone_ranks.json"
+        )
+        let result = Array(decoded.values).sorted { $0.id < $1.id }
+        Self.coneRanksCache = result
         return result
     }
 
