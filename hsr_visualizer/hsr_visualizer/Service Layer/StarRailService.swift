@@ -14,6 +14,7 @@ class StarRailService {
     private static var charactersCache: [StarRailCharacter]?
     private static var lightConesCache: [LightCone]?
     private static var relicSetsCache: [RelicSet]?
+    private static var relicCache: [Relic]?
     private static var promotionsCache: [CharacterPromotion]?
     private static var ranksCache: [CharacterRank]?
     private static var skillTreesCache: [CharacterSkillTree]?
@@ -114,6 +115,16 @@ class StarRailService {
         )
         let result = Array(decoded.values).sorted { $0.id < $1.id }
         Self.coneRanksCache = result
+        return result
+    }
+    
+    func fetchRelic() async throws -> [Relic] {
+        if let cached = Self.relicCache { return cached }
+        let decoded: [String: Relic] = try await fetchJSON(
+            from: "https://mlins888.github.io/StarRailUpdatedAPI/db/en/relics.json"
+        )
+        let result = Array(decoded.values).sorted { $0.id < $1.id }
+        Self.relicCache = result
         return result
     }
 

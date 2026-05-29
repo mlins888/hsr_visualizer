@@ -177,7 +177,7 @@ struct CharacterDetailView: View {
     private var skillsCard: some View {
         sectionCard {
             VStack(alignment: .leading, spacing: 14) {
-                Text("Skills")
+                Text("Abilities")
                     .font(.headline)
                     .foregroundStyle(goldText)
 
